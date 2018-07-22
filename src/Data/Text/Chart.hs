@@ -1,19 +1,14 @@
-{-# Language FlexibleContexts #-}
-
 module Data.Text.Chart (chart) where
 
-import Control.Lens
-import Control.Monad.ST
 import Control.Monad (forM_)
-import Data.Array.IO
-import Data.List.Split
-import System.Environment
-import Data.List
-import Data.Char
-import Data.Maybe
+import Data.Array.IO (newArray, IOArray, getElems, writeArray)
+import Data.List     (unfoldr)
 
 newArray2D :: Integer -> Integer -> IO (IOArray (Integer, Integer) String)
 newArray2D dimX dimY = newArray ((0,0), (dimX, dimY)) " "
+
+splitEvery :: Int -> [a] -> [[a]]
+splitEvery n = takeWhile (not . null) . unfoldr (Just . splitAt n)
 
 padL :: Int -> String -> String
 padL n s
@@ -40,7 +35,6 @@ chart series = do
 
     -- axis and labels
     forM_ [min2..max2] $ \y -> do
-
             let label = show (max' - (y - min2) * range `div` rows)
             result [y - min2] [maximum [offset - 5, 0]] (padL 2 label)
             result [y - min2] [offset - 1] (if y == 0 then "┼" else "┤")
@@ -51,7 +45,6 @@ chart series = do
 
     -- plot the line
     forM_ [0..(length series - 2)] $ \x' -> do
-
         let x = toInteger x'
         let y0' = (series !! (x' + 0) * ratio) - min2
         let y1' = (series !! (x' + 1) * ratio) - min2
@@ -73,7 +66,5 @@ chart series = do
 
     -- print the results
     e <- getElems arr
-    let result = chunksOf (width + 1) e
-    let flatten = flip foldr [] $ flip $ foldr (:)
-    mapM_ (putStrLn . flatten) result
-
+    let result = splitEvery (width + 1) e
+    mapM_ (putStrLn . concat) result
