@@ -4,7 +4,7 @@
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License: MIT" /></a>
 
 ASCII line charts in terminal ╭┈╯ for Haskell (adaption from kroitor/asciichart)
-Console ASCII line charts in pure Haskell. This code is absolutely free for any usage (MIT Licencse).
+Console ASCII line charts in pure Haskell. This code is absolutely free for any usage (MIT License).
 
 ![](example.png)
 
