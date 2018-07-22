@@ -16,9 +16,11 @@ cabal install asciichart # will be on hackage soon (no available yet)
 ```haskell
 import Data.Text.Chart (plot)
 
-main :: IO()
+main :: IO ()
 main = plot [1..20]
 ```
+
+For more examples e.g. sinus wave see example folder.
 
 ## References
 
