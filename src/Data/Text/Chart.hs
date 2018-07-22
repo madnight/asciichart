@@ -1,4 +1,4 @@
-module Data.Text.Chart (chart) where
+module Data.Text.Chart (plot) where
 
 import Control.Monad (forM_)
 import Data.Array.IO (newArray, IOArray, getElems, writeArray)
@@ -15,8 +15,8 @@ padL n s
     | length s < n  = s ++ replicate (n - length s) ' '
     | otherwise     = s
 
-chart :: [Integer] -> IO()
-chart series = do
+plot :: [Integer] -> IO()
+plot series = do
     -- variables and functions
     let min' = minimum series
     let max' = maximum series
