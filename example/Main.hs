@@ -1,4 +1,9 @@
-import Data.Text.Chart (chart)
+import Data.Text.Chart (plot)
 
-main :: IO()
-main = chart [1,1,1,1,1,2,2,2,2,3,3,3,4,4,4,4,4,3,3,3,3,3,2,2,2,1,1,1,4,4,4,4,20,20,20,20,20,20,18,18,14,15,16,17,18,16,12,10,3,3,3,4,5,6,7,8]
+main :: IO ()
+main = do
+
+  plot [1..20]
+
+  -- sinus example
+  plot $ map (\i -> round $ 10 * sin (i * (pi * 4) / 120) ) [0..120]
