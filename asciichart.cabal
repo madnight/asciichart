@@ -1,0 +1,24 @@
+name:                asciichart
+version:             1.0.0
+synopsis:            Line charts in terminal
+description:         Line charts in terminal. For more see README.md
+license:             MIT
+license-file:        LICENSE
+author:              Fabian Beuke
+maintainer:          mail@beuke.org
+copyright:           (c) 2018-Present Fabian Beuke
+category:            Text
+build-type:          Simple
+extra-source-files:  ChangeLog.md, README.md
+cabal-version:       >=1.10
+
+library
+  exposed-modules:     Data.Text.Chart
+  -- other-modules:
+  -- other-extensions:
+  build-depends:       base >=4.10 && <4.12
+                     , array >=0.5 && <0.6
+                     , split >=0.2 && <0.3
+                     , lens
+  hs-source-dirs:      src
+  default-language:    Haskell2010
