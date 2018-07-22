@@ -77,6 +77,3 @@ chart series = do
     let flatten = flip foldr [] $ flip $ foldr (:)
     mapM_ (putStrLn . flatten) result
 
-{- main :: IO() -}
-{- main = chart [1,1,1,1,1,2,2,2,2,3,3,3,4,4,4,4,4,3,3,3,3,3,2,2,2,1,1,1,4,4,4,4,20,20,20,20,20,20,18,18,14,15,16,17,18,16,12,10,3,3,3,4,5,6,7,8] -}
-
