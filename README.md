@@ -20,7 +20,7 @@ main :: IO ()
 main = plot [1..20]
 ```
 
-For more examples e.g. sinus wave see [example folder](https://github.com/madnight/asciichart/tree/master/example).
+For more examples e.g. sinus wave see [examples folder](https://github.com/madnight/asciichart/tree/master/examples).
 
 ## References
 
