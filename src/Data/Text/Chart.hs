@@ -3,7 +3,6 @@ module Data.Text.Chart
     , plotWith
     , options
     , height
-    , offset
     ) where
 
 import Control.Monad (forM_)
@@ -12,16 +11,12 @@ import Data.List     (unfoldr)
 import Text.Printf   (printf)
 
 data Options =
-  Options { height :: Int
-          , offset :: Int
-          }
+  Options { height :: Int }
 
 -- default options
 options :: Options
 options =
-  Options { height = 14
-          , offset = 3
-          }
+  Options { height = 14 }
 
 newArray2D :: Integer -> Integer -> IO (IOArray (Integer, Integer) String)
 newArray2D dimX dimY = newArray ((0,0), (dimX, dimY)) " "
@@ -32,6 +27,13 @@ splitEvery n = takeWhile (not . null) . unfoldr (Just . splitAt n)
 plot :: [Integer] -> IO ()
 plot = plotWith options
 
+pad :: Integral a => [a] -> Int
+pad series =
+  let floats = fromIntegral <$> series
+      toStr :: [Float] -> [String]
+      toStr = fmap (printf "%0.2f")
+  in  maximum $ length <$> toStr floats
+
 plotWith :: Options -> [Integer] -> IO ()
 plotWith options series = do
 
@@ -39,13 +41,14 @@ plotWith options series = do
     let min' = minimum series
     let max' = maximum series
     let range = abs $ max' - min'
-    let offset' = fromIntegral $ offset options
+    let offset' = 3
     let height' = height options
     let ratio = fromIntegral height' / fromIntegral range :: Float
     let min2 = fromIntegral min' * ratio
     let max2 = fromIntegral max' * ratio
     let rows = round $ abs $ max2 - min2
     let width = length series + 3
+    let pad' = pad series
 
     -- array creation
     arr <- newArray2D rows (toInteger width)
@@ -57,7 +60,7 @@ plotWith options series = do
             let label = fromInteger max' - (y - min2)
                       * fromInteger range / fromIntegral rows
             result [round(y - min2)] [maximum [offset' - 5, 0]]
-                   (printf "%6.2f" label)
+                   (printf ("%"++ show pad' ++".2f") label)
             result [round(y - min2)] [offset' - 1]
                    (if y == 0 then "┼" else "┤")
 
