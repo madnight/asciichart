@@ -1,7 +1,7 @@
 # WORK IN PROGRESS
 
 # asciichart
-<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License: MIT" /></a>
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 ASCII line charts in terminal ╭┈╯ for Haskell (adaption from kroitor/asciichart)
 Console ASCII line charts in pure Haskell. This code is absolutely free for any usage (MIT License).
@@ -20,7 +20,7 @@ main :: IO ()
 main = plot [1..20]
 ```
 
-For more examples e.g. sinus wave see example folder.
+For more examples e.g. sinus wave see [example folder](https://github.com/madnight/asciichart/tree/master/example).
 
 ## References
 
