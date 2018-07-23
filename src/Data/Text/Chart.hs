@@ -1,4 +1,10 @@
-module Data.Text.Chart (plot) where
+module Data.Text.Chart
+    ( plot
+    , plotWith
+    , options
+    , height
+    , offset
+    ) where
 
 import Control.Monad (forM_)
 import Data.Array.IO (newArray, IOArray, getElems, writeArray)
