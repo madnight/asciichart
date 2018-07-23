@@ -4,12 +4,15 @@ let
 
   inherit (nixpkgs) pkgs;
 
-  f = { mkDerivation, array, base, lens, split, stdenv }:
+  f = { mkDerivation, array, base, random, stdenv }:
       mkDerivation {
         pname = "asciichart";
         version = "1.0.0";
         src = ./.;
-        libraryHaskellDepends = [ array base lens split ];
+        libraryHaskellDepends = [ array base ];
+        testHaskellDepends = [ base random ];
+        homepage = "https://github.com/madnight/asciichart";
+        description = "Line charts in terminal";
         license = stdenv.lib.licenses.mit;
       };
 
