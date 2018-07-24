@@ -59,10 +59,10 @@ plotWith options series = do
     forM_ [min2..max2] $ \y -> do
             let label = fromInteger max' - (y - min2)
                       * fromInteger range / fromIntegral rows
-            result [round(y - min2)] [maximum [offset' - 5, 0]]
-                   (printf ("%"++ show pad' ++".2f") label)
-            result [round(y - min2)] [offset' - 1]
-                   (if y == 0 then "┼" else "┤")
+            result [round(y - min2)] [maximum [offset' - 5, 0]] $
+                   printf ("%"++ show pad' ++".2f") label
+            result [round(y - min2)] [offset' - 1] $
+                   if y == 0 then "┼" else "┤"
 
     -- initial value
     let first = fromInteger (head series) * ratio - min2
@@ -71,20 +71,21 @@ plotWith options series = do
     -- plot the line
     forM_ [0..(length series - 2)] $ \x' -> do
         let x = toInteger x'
-        let y0' = round (fromInteger (series !! (x' + 0)) * ratio) - round min2
-        let y1' = round (fromInteger (series !! (x' + 1)) * ratio) - round min2
-        if y0' == y1' then
-            result [rows - y0'] [x + offset'] "─"
+        let offset'' = x + offset'
+        let y0 = round (fromInteger (series !! (x' + 0)) * ratio) - round min2
+        let y1 = round (fromInteger (series !! (x' + 1)) * ratio) - round min2
+        if y0 == y1 then
+            result [rows - y0] [offset''] "─"
         else do
-            result [rows - y1'] [x + offset'] $
-                   if y0' > y1' then "╰" else "╭"
-            result [rows - y0'] [x + offset'] $
-                   if y0' > y1' then "╮" else "╯"
-            let start = minimum [y0', y1'] + 1
-            let end = maximum [y0', y1']
+            result [rows - y1] [offset''] $
+                   if y0 > y1 then "╰" else "╭"
+            result [rows - y0] [offset''] $
+                   if y0 > y1 then "╮" else "╯"
+            let start = minimum [y0, y1] + 1
+            let end = maximum [y0, y1]
 
             forM_ [start..(end - 1)] $ \y ->
-                result [rows - y] [toInteger x + offset'] "│"
+                result [rows - y] [offset''] "│"
 
     -- print the results
     elements <- getElems arr
