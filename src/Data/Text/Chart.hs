@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 module Data.Text.Chart
     ( plot
     , plotWith
@@ -9,6 +11,10 @@ import Control.Monad (forM_)
 import Data.Array.IO (newArray, IOArray, getElems, writeArray)
 import Data.List     (unfoldr)
 import Text.Printf   (printf)
+
+#if !MIN_VERSION_base(4,8,0)
+import Control.Applicative ((<$>))
+#endif
 
 data Options =
   Options { height :: Int }
