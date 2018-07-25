@@ -46,9 +46,9 @@ test-suite test
     hs-source-dirs:    test
     ghc-options:       -Wall
     default-language:  Haskell2010
-    build-depends: base
-                 , asciichart
-                 , random
-                 , silently
-                 , raw-strings-qq
-                 , hspec == 2.*
+    build-depends:     base
+                     , asciichart
+                     , random
+                     , silently
+                     , raw-strings-qq
+                     , hspec == 2.*
