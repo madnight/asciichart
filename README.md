@@ -1,17 +1,15 @@
-# WORK IN PROGRESS
-
 # asciichart
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/madnight/asciichart.svg?branch=master)](https://travis-ci.org/madnight/asciichart)
 
 ASCII line charts in terminal ╭┈╯ for Haskell (adaption from kroitor/asciichart)
-Console ASCII line charts in pure Haskell. This code is absolutely free for any usage (MIT License).
+Console line charts in pure Haskell. This code is absolutely free for any usage (MIT License).
 
 ![](example.png)
 
 ## Usage
 ```bash
-cabal install asciichart # will be on hackage soon (no available yet)
+cabal install asciichart
 ```
 
 ```haskell
