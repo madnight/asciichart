@@ -9,9 +9,9 @@ module Data.Text.Chart
 
 import Control.Monad (forM_)
 import Data.Array.IO (newArray, IOArray, getElems, writeArray)
+import Data.Char     (isSpace)
 import Data.List     (unfoldr, dropWhileEnd)
 import Text.Printf   (printf)
-import Data.Char     (isSpace)
 
 #if !MIN_VERSION_base(4,8,0)
 import Control.Applicative ((<$>))

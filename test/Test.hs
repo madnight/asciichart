@@ -3,10 +3,10 @@
 
 import Control.Monad       (forM_, replicateM)
 import Data.Text.Chart     (plot, plotWith, options, height)
-import Test.Hspec
-import Text.RawString.QQ
 import System.IO.Silently
 import System.Random       (randomRIO)
+import Test.Hspec
+import Text.RawString.QQ
 
 #if !MIN_VERSION_base(4,8,0)
 import Control.Applicative ((<$>))
