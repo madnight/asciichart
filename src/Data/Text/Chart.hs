@@ -9,8 +9,9 @@ module Data.Text.Chart
 
 import Control.Monad (forM_)
 import Data.Array.IO (newArray, IOArray, getElems, writeArray)
-import Data.List     (unfoldr)
+import Data.List     (unfoldr, dropWhileEnd)
 import Text.Printf   (printf)
+import Data.Char     (isSpace)
 
 #if !MIN_VERSION_base(4,8,0)
 import Control.Applicative ((<$>))
@@ -96,4 +97,4 @@ plotWith options series = do
     -- print the results
     elements <- getElems arr
     let result = splitEvery (width + 1) elements
-    forM_ result $ putStrLn . concat
+    forM_ result $ putStrLn . dropWhileEnd isSpace . concat

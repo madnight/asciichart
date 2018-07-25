@@ -32,6 +32,7 @@ library
   build-depends:       base >=3.0 && <5
                      , array >=0.5 && <0.6
   hs-source-dirs:      src
+  ghc-options:         -Wall
   default-language:    Haskell2010
 
 test-suite test
@@ -43,3 +44,6 @@ test-suite test
     build-depends: base
                  , asciichart
                  , random
+                 , silently
+                 , raw-strings-qq
+                 , hspec == 2.*
