@@ -12,6 +12,11 @@ category:            Text
 build-type:          Simple
 extra-source-files:  ChangeLog.md, README.md
 cabal-version:       >=1.10
+tested-with:         GHC == 7.8
+                   , GHC == 7.10
+                   , GHC == 8.0.1
+                   , GHC == 8.2.2
+                   , GHC == 8.4.1
 description:
   Line charts in terminal ╭┈╯ for Haskell (adaption from kroitor/asciichart).
   .
