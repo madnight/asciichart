@@ -3,7 +3,7 @@
 <p><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg" alt="License: MIT" /></a>
 <a href="https://travis-ci.org/madnight/asciichart"><img src="https://travis-ci.org/madnight/asciichart.svg?branch=master" alt="Build Status" /></a>
 <a href="http://hackage.haskell.org/package/asciichart"><img src="https://images.weserv.nl/?url=img.shields.io/hackage/v/asciichart.svg&w=3000&t=fitup" width="100" alt="Hackage" /></a>
-<a href="http://hackage.haskell.org/package/asciichart"><img src="https://images.weserv.nl/?url=img.shields.io/hackage-deps/v/asciichart.svg&w=3000&t=fitup" width="100" alt="Hackage-Deps" /></a></p>
+<a href="http://hackage.haskell.org/package/asciichart"><img src="https://images.weserv.nl/?url=img.shields.io/hackage-deps/v/asciichart.svg&w=3000&t=fitup" height="20" alt="Hackage-Deps" /></a></p>
 
 
 ASCII line charts in terminal ╭┈╯. Console line charts in pure Haskell.  
