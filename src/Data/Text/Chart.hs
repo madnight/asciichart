@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE Safe #-}
 
 module Data.Text.Chart
     ( plot
@@ -7,15 +8,17 @@ module Data.Text.Chart
     , height
     ) where
 
-import Control.Monad (forM_)
-import Data.Array.IO (newArray, IOArray, getElems, writeArray)
-import Data.Char     (isSpace)
-import Data.List     (unfoldr, dropWhileEnd)
-import Text.Printf   (printf)
-
 #if !MIN_VERSION_base(4,8,0)
-import Control.Applicative ((<$>))
+import Control.Applicative     ((<$>))
+import Control.Monad.ST.Safe   (ST, runST)
+#else
+import Control.Monad.ST        (ST, runST)
 #endif
+import Control.Monad           (forM_)
+import Data.Array.ST.Safe      (STArray, getElems, writeArray, newArray)
+import Data.Char               (isSpace)
+import Data.List               (unfoldr, dropWhileEnd)
+import Text.Printf             (printf)
 
 data Options =
   Options { height :: Int }
@@ -25,14 +28,12 @@ options :: Options
 options =
   Options { height = 14 }
 
-newArray2D :: Integer -> Integer -> IO (IOArray (Integer, Integer) String)
+newArray2D :: Integer -> Integer ->
+              ST s (STArray s (Integer, Integer) String)
 newArray2D dimX dimY = newArray ((0,0), (dimX, dimY)) " "
 
 splitEvery :: Int -> [a] -> [[a]]
 splitEvery n = takeWhile (not . null) . unfoldr (Just . splitAt n)
-
-plot :: [Integer] -> IO ()
-plot = plotWith options
 
 pad :: Integral a => [a] -> Int
 pad series =
@@ -41,8 +42,8 @@ pad series =
       toStr = fmap (printf "%0.2f")
   in  maximum $ length <$> toStr floats
 
-plotWith :: Options -> [Integer] -> IO ()
-plotWith options series = do
+plotWith' :: Options -> [Integer] -> [String]
+plotWith' options series = runST $ do
 
     -- variables and functions
     let min' = minimum series
@@ -94,7 +95,13 @@ plotWith options series = do
             forM_ [start..(end - 1)] $ \y ->
                 result [rows - y] [offset''] "│"
 
-    -- print the results
-    elements <- getElems arr
-    let result = splitEvery (width + 1) elements
-    forM_ result $ putStrLn . dropWhileEnd isSpace . concat
+    getElems arr
+
+plot :: [Integer] -> IO ()
+plot = plotWith options
+
+plotWith :: Options -> [Integer] -> IO ()
+plotWith options series = forM_ result $
+      putStrLn . dropWhileEnd isSpace . concat
+    where result = splitEvery (length series + 4) $ plotWith' options series
+
