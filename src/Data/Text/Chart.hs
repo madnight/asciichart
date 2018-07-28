@@ -2,7 +2,6 @@
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE FlexibleContexts #-}
 
-
 module Data.Text.Chart
     ( plot
     , plotWith
@@ -46,14 +45,14 @@ pad series =
   in  maximum $ length <$> toStr floats
 
 plotWith' :: Options -> [Integer] -> [String]
-plotWith' options series =
+plotWith' opts series =
 
     -- variables and functions
     let min' = minimum series
         max' = maximum series
         range = abs $ max' - min'
         offset = 3
-        ratio = fromIntegral (height options) / fromIntegral range :: Float
+        ratio = fromIntegral (height opts) / fromIntegral range :: Float
         min2 = fromIntegral min' * ratio
         max2 = fromIntegral max' * ratio
         rows = round $ abs $ max2 - min2
@@ -63,7 +62,7 @@ plotWith' options series =
 
     -- array creation
     arr <- newArray2D rows width
-    let result [x] [y] = writeArray arr (x, y)
+    let result x y = writeArray arr (head x, head y)
 
     -- axis and labels
     forM_ [min2..max2] $ \y -> do
@@ -80,8 +79,8 @@ plotWith' options series =
     -- plot the line
     forM_ [0..length series - 2] $ \x -> do
         let offset' = toInteger x + offset
-        let y i = round (fromInteger (series !! i) * ratio) - round min2
-        let (y0, y1) = (y x, y $ x + 1)
+        let y' i = round (fromInteger (series !! i) * ratio) - round min2
+        let (y0, y1) = (y' x, y' $ x + 1)
         if y0 == y1 then
             result [rows - y0] [offset'] "─"
         else do
@@ -97,6 +96,6 @@ plot :: [Integer] -> IO ()
 plot = plotWith options
 
 plotWith :: Options -> [Integer] -> IO ()
-plotWith options series = forM_ result $
+plotWith options' series = forM_ result $
       putStrLn . dropWhileEnd isSpace . concat
-    where result = splitEvery (length series + 4) $ plotWith' options series
+    where result = splitEvery (length series + 4) $ plotWith' options' series
