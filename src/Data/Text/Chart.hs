@@ -2,9 +2,25 @@
 {-# LANGUAGE Safe #-}
 {-# LANGUAGE FlexibleContexts #-}
 
+-----------------------------------------------------------------------------
+-- |
+-- Module      :  Data.Text.Chart
+-- License     :  MIT
+-- Maintainer  :  Fabian Beuke <mail@beuke.org>
+--
+-- This module contains 4 functions. The plot function provides a very simple
+-- interface for plotting. It takes a List of Integers and prints out a
+-- corresponding chart with a default terminal height of 14 blocks.
+-- The 'plot' function is therefore equivalent to @'plotWith'
+-- options {height = 14}@. You can find some examples
+-- <https://github.com/madnight/asciichart/tree/master/examples here>.
+-----------------------------------------------------------------------------
+
 module Data.Text.Chart
-    ( plot
+    ( -- * Plot
+      plot
     , plotWith
+      -- * Options
     , options
     , height
     ) where
@@ -23,9 +39,10 @@ import Text.Printf             (printf)
 import Data.Bool               (bool)
 
 data Options =
-  Options { height :: Int }
+  Options { height :: Int  -- ^ Allows to set the height of the chart.
+          }
 
--- default options
+-- | Provides default options: @Options { 'height' = 14 }@.
 options :: Options
 options =
   Options { height = 14 }
@@ -92,9 +109,13 @@ plotWith' opts series =
 
     getElems arr
 
+-- | Takes a List of Integers and prints out a
+--   corresponding chart with a default terminal height of 14 blocks.
 plot :: [Integer] -> IO ()
 plot = plotWith options
 
+-- | Same as plot but it's possible to define custom options.
+--   Example: @'plotWith' options { 'height' = 20 }@
 plotWith :: Options -> [Integer] -> IO ()
 plotWith options' series = forM_ result $
       putStrLn . dropWhileEnd isSpace . concat
