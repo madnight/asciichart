@@ -69,7 +69,8 @@ plotWith' opts series =
         max' = maximum series
         range = abs $ max' - min'
         offset = 3
-        ratio = fromIntegral (height opts) / fromIntegral range :: Float
+        ratio = if range == 0 then 1
+                else fromIntegral (height opts) / fromIntegral range :: Float
         min2 = fromIntegral min' * ratio
         max2 = fromIntegral max' * ratio
         rows = round $ abs $ max2 - min2
@@ -83,8 +84,9 @@ plotWith' opts series =
 
     -- axis and labels
     forM_ [min2..max2] $ \y -> do
-            let label = fromInteger max' - (y - min2)
-                      * fromInteger range / fromIntegral rows
+            let label = if rows == 0 then y
+                        else fromInteger max' - (y - min2) *
+                             fromInteger range / fromIntegral rows
             result [round $ y - min2] [max 0 $ offset - 5] $
                    printf ("%" ++ show (pad series) ++ ".2f") label
             result [round $ y - min2] [offset - 1] . bool "┤" "┼" $ y == 0
@@ -112,7 +114,7 @@ plotWith' opts series =
 -- | Takes a List of Integers and prints out a
 --   corresponding chart with a default terminal height of 14 blocks.
 plot :: [Integer] -> IO ()
-plot = plotWith options
+plot x =  if length x < 1 then return () else plotWith options x
 
 -- | Same as plot but it's possible to define custom options.
 --   Example: @'plotWith' options { 'height' = 20 }@

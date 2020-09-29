@@ -9,7 +9,7 @@ let
       }:
       mkDerivation {
         pname = "asciichart";
-        version = "1.0.0";
+        version = "1.0.2";
         src = ./.;
         libraryHaskellDepends = [ array base ];
         testHaskellDepends = [ base hspec random raw-strings-qq silently ];
